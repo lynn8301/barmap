@@ -1,0 +1,16 @@
+# Barmap
+A map which collocts a variety of bars.
+
+## Basic Function
+- Add
+
+## Setup
+- You can git clone to your desktop.
+```
+$ git clone https://github.com/linyiju/barmap.git
+$ cd barmap
+```
+- Remeber to install [node.js](https://nodejs.org/en/download/) and npm. After installing these packages, run the following commands.
+```
+$ npm install
+```
