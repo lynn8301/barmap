@@ -2,6 +2,7 @@
   let express = require('express')
   let bodyParser = require('body-parser')
   let cookieParser = require('cookie-parser')
+  let router = express.Router()
   let path = require('path')
   let cors = require('cors')
   let app = express()
@@ -19,6 +20,15 @@
 
   let barmap = require(`${__dirname}/routes/bar.js`)
   app.use('/barmap', barmap)
+
+  // Set index page
+  app.get('/', (req, res) => {
+    let data = {
+      title: 'BarMap',
+      description: 'To explore the amazing bar',
+    }
+    res.render('index', data)
+  })
 
   app.listen(port, () => {
     console.log(`Exapmle app listening at http://localhost:${port}`)
