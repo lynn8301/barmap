@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     title: 'BarMap',
     description: 'To explore the amazing bar',
   }
-  res.render('index', data)
+  res.render('bar/addBar', data)
 })
 
 // router.get('/add', (req, res) => {
