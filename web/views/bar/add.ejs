@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>
+            <%= title%>
+        </title>
+    </head>
+    <body>
+        <p><%= description%></p>
+        <form action="/add" method="POST">
+            <h2>單筆資料</h2>
+            <ul>
+                <li>
+                    <label>酒吧名稱:</label>
+                    <input type="text" name="barName"><br>
+                </li>
+                <li>
+                    <label>地址:</label>
+                    <input type="text" name="address"><br>    
+                </li>
+                <li>
+                    <label>電話:</label>
+                    <input type="text" name="phone"><br>    
+                </li>
+                <li>
+                    <label>緯度:</label>
+                    <input type="text" name="lat"><br>
+                    <small>Format: </small><br>
+                </li>
+                <li>
+                    <label>經度</label>
+                    <input type="text" name="lng"><br>
+                    <small>Format: </small><br>    
+                </li>
+            </ul>
+            <input type="submit">
+        </form>
+
+        <form action="/add" method="POST" enctype="multipart/form-data">
+            <h2>多筆資料</h2>
+            <label>Upload CSV File: </label>
+            <input type="file" name="csv-file"><br>
+            <a href="/barmap/bar-csv-sample-file">Download Sample</a><br>
+            <input type="submit">
+        </form>
+    </body>
+
+</html>
