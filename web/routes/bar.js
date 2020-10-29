@@ -20,4 +20,18 @@ router.get('/bar-csv-sample-file', (req, res) => {
   })
 })
 
+router.post('/check', (req, res) => {
+  let params = req.body
+  let data = {
+    title: 'BarMap',
+    description: 'To explore the amazing bar',
+    name: params.name,
+    address: params.address,
+    phone: params.phone,
+    lat: params.lat,
+    lng:params.lng
+  }
+  res.render('bar/check', data)
+})
+
 module.exports = router
