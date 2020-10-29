@@ -6,12 +6,12 @@
     </head>
     <body>
         <p><%= description%></p>
-        <form action="/add" method="POST">
+        <form action="/barmap/check" method="POST">
             <h2>單筆資料</h2>
             <ul>
                 <li>
                     <label>酒吧名稱:</label>
-                    <input type="text" name="barName"><br>
+                    <input type="text" name="name"><br>
                 </li>
                 <li>
                     <label>地址:</label>
@@ -35,7 +35,7 @@
             <input type="submit">
         </form>
 
-        <form action="/add" method="POST" enctype="multipart/form-data">
+        <form action="/barmap/check" method="POST">
             <h2>多筆資料</h2>
             <label>Upload CSV File: </label>
             <input type="file" name="csv-file"><br>
