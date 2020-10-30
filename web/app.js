@@ -15,8 +15,13 @@
   )
   app.use(cookieParser())
   app.use(cors())
-  app.set('views', path.join(__dirname, 'views'))
+
+  // set the view engine to ejs
   app.set('view engine', 'ejs')
+
+  // include all folders
+  app.use(express.static(path.join(__dirname, 'public')))
+  app.set('views', path.join(__dirname, 'views'))
 
   let barmap = require(`${__dirname}/routes/bar.js`)
   app.use('/barmap', barmap)
