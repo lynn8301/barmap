@@ -29,9 +29,13 @@ router.post('/check', (req, res) => {
     address: params.address,
     phone: params.phone,
     lat: params.lat,
-    lng:params.lng
+    lng: params.lng,
   }
   res.render('bar/check', data)
+})
+
+router.get('/map', (req, res) => {
+  res.render('bar/map')
 })
 
 module.exports = router
