@@ -6,7 +6,7 @@
     </head>
     <body>
         <p><%= description%></p>
-        <form action="/barmap/check" method="POST">
+        <form action="/barmap/submit" method="POST">
             <h2>單筆資料</h2>
             <ul>
                 <li>
@@ -23,19 +23,19 @@
                 </li>
                 <li>
                     <label>緯度:</label>
-                    <input type="text" name="lat"><br>
+                    <input type="text" name="lat" value="0"><br>
                     <small>Format: </small><br>
                 </li>
                 <li>
                     <label>經度</label>
-                    <input type="text" name="lng"><br>
+                    <input type="text" name="lng" value="0"><br>
                     <small>Format: </small><br>    
                 </li>
             </ul>
             <input type="submit">
         </form>
 
-        <form action="/barmap/check" method="POST">
+        <form action="/barmap/sumbit" method="POST">
             <h2>多筆資料</h2>
             <label>Upload CSV File: </label>
             <input type="file" name="csv-file"><br>
