@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 const base = require(`${__dirname}/../../lib/base.js`)
+const multer  = require('multer')
+const upload = multer({dest: 'uploads/'})
 
 router.get('/add', (req, res) => {
   let data = {
@@ -33,19 +35,27 @@ router.post('/submit', async (req, res) => {
     lat: params.lat,
     lng: params.lng,
   }
-
-  await db.queryAsync('INSERT INTO bar SET ?', barInfo)
+  let existed = await db.queryAsync("SELECT * FROM bar WHERE name = ?", barInfo.name)
+  if(existed == 0) {
+    await db.queryAsync('INSERT INTO bar SET ?', barInfo)
+  } else {
+    barInfo.error = '資料以存在'
+  }
   await db.end()
 
-  let message = `You sent the data as the following\n
-  Name: ${barInfo.name}\n
-  Address: ${barInfo.address}\n
-  Phone: ${barInfo.phone}\n
-  Lat: ${barInfo.lat}\n
-  Lng: ${barInfo.lng}`
-  
-  res.write(message)
-  res.end()
+  let data = {
+    title: 'BarMap',
+    description: 'To explore the amazing bar',
+    barInfo: barInfo,
+  }
+
+  res.render('bar/add', data)
+})
+
+// 多筆資料
+router.post('/submitCSV', upload.single('BarMultiple'), async(req, res) => {
+  let file = req.file
+  console.log(file)
 })
 
 router.get('/map', (req, res) => {

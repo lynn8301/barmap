@@ -34,8 +34,19 @@
             </ul>
             <input type="submit">
         </form>
-
-        <form action="/barmap/sumbit" method="POST">
+        <% if (typeof(barInfo) !== "undefined" && barInfo) { %> 
+            <h3>上傳資訊</h3>
+            <% if (typeof(barInfo.error) !== "undefined" && barInfo) { %>
+                <p><%= barInfo.error%></p>
+            <%} else {%>
+                <p>Name: <%= barInfo.name%></p>
+                <p>Address: <%= barInfo.address%></p>
+                <p>Phone: <%= barInfo.phone%></p>
+                <p>Lat: <%= barInfo.lat%></p>
+                <p>Lng: <%= barInfo.lng%></p>
+            <% } %>
+        <% } %>
+        <form action="/barmap/submitCSV" method="POST" enctype="multipart/form-data">
             <h2>多筆資料</h2>
             <label>Upload CSV File: </label>
             <input type="file" name="csv-file"><br>
