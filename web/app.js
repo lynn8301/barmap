@@ -6,7 +6,7 @@
   let path = require('path')
   let cors = require('cors')
   let app = express()
-  let port = 3000
+  let port = process.env.PORT || 3000
   app.use(bodyParser.json())
   app.use(
     bodyParser.urlencoded({
