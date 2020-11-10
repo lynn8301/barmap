@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>
+            <%= title%>
+        </title>
+    </head>
+    <body>
+        <%= description%>
+        <form action="" method="POST">
+            <table>
+                <tr>
+                    <th>酒吧名稱</th>
+                    <th>地址</th>
+                    <th>電話</th>
+                    <th>緯度</th>
+                    <th>經度</th>
+                </tr>
+                <tr>
+                    <td><%= name%></td>
+                    <td><%= address%></td>
+                    <td><%= phone%></td>
+                    <td><%= lat%></td>
+                    <td><%= lng%></td>
+                </tr>
+            </table>
+            <input type="submit">
+        </form>
+    </body>
+</html>
