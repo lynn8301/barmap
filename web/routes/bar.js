@@ -2,7 +2,11 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 const base = require(`${__dirname}/../../lib/base.js`)
+<<<<<<< HEAD
 const multer  = require('multer')
+=======
+const multer = require('multer')
+>>>>>>> create-add-function
 const moment = require('moment')
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -15,11 +19,19 @@ const storage = multer.diskStorage({
     let typeArray = file.originalname.split('.')
     let fileType = typeArray[typeArray.length - 1]
 
+<<<<<<< HEAD
     cb(null,`${file.fieldname}-${date}.${fileType}`)
   }
 })
 const fileFilter = function(req, file, cb) {
   if(!file.originalname.match(/\.(csv)$/)) {
+=======
+    cb(null, `${file.fieldname}-${date}.${fileType}`)
+  },
+})
+const fileFilter = function (req, file, cb) {
+  if (!file.originalname.match(/\.(csv)$/)) {
+>>>>>>> create-add-function
     return cb(new Error('Please upload CSV'), false)
   }
 
@@ -56,8 +68,11 @@ router.post('/submit', async (req, res) => {
     lat: params.lat,
     lng: params.lng,
   }
-  let existed = await db.queryAsync("SELECT * FROM bar WHERE name = ?", barInfo.name)
-  if(existed == 0) {
+  let existed = await db.queryAsync(
+    'SELECT * FROM bar WHERE name = ?',
+    barInfo.name,
+  )
+  if (existed == 0) {
     await db.queryAsync('INSERT INTO bar SET ?', barInfo)
   } else {
     barInfo.error = '資料以存在'
@@ -76,6 +91,7 @@ router.post('/submit', async (req, res) => {
 // 多筆資料
 const upload = multer({
   storage: storage,
+<<<<<<< HEAD
   fileFilter: fileFilter
 }).single('csv-file')
 
@@ -86,6 +102,18 @@ router.post('/submitCSV', async(req, res,) => {
       barInfo.error = "請上傳正確的檔案格式"
     } else {
       barInfo.success = "上傳成功"
+=======
+  fileFilter: fileFilter,
+}).single('csv-file')
+
+router.post('/submitCSV', async (req, res) => {
+  upload(req, res, async (err) => {
+    let barInfo = {}
+    if (err) {
+      barInfo.error = '請上傳正確的檔案格式'
+    } else {
+      barInfo.success = '上傳成功'
+>>>>>>> create-add-function
     }
 
     let desPath = path.join(`${__dirname}`, '..', 'tmp/uploads', 'csv-file')
