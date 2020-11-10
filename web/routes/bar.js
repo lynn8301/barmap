@@ -47,7 +47,7 @@ router.get('/bar-csv-sample-file', (req, res) => {
 
 // 單筆資料
 router.post('/submit', async (req, res) => {
-  let db = base.mysqlPool(base.config().development)
+  let db = base.mysqlPool(base.config())
   let params = req.body
   let barInfo = {
     name: params.name,

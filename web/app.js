@@ -6,7 +6,6 @@
   let path = require('path')
   let cors = require('cors')
   let app = express()
-  let port = process.env.PORT || 3000
   app.use(bodyParser.json())
   app.use(
     bodyParser.urlencoded({
@@ -15,6 +14,9 @@
   )
   app.use(cookieParser())
   app.use(cors())
+
+  // set poty to 3000 or the value set by environment var PORT
+  app.set('port', (process.env.PORT || 3000))
 
   // set the view engine to ejs
   app.set('view engine', 'ejs')
@@ -35,7 +37,7 @@
     res.render('index', data)
   })
 
-  app.listen(port, () => {
-    console.log(`Exapmle app listening at http://localhost:${port}`)
+  app.listen(app.get('port'), () => {
+    console.log(`Exapmle app listening at http://localhost:${app.get('port')}`)
   })
 })()
