@@ -36,7 +36,7 @@
         </form>
         <% if (typeof(barInfo) !== "undefined" && barInfo) { %> 
             <h3>上傳資訊</h3>
-            <% if (typeof(barInfo.error) !== "undefined" && barInfo) { %>
+            <% if (typeof(barInfo.error) !== "undefined" && barInfo.error) { %>
                 <p><%= barInfo.error%></p>
             <%} else {%>
                 <p>Name: <%= barInfo.name%></p>
@@ -53,6 +53,22 @@
             <a href="/barmap/bar-csv-sample-file">Download Sample</a><br>
             <input type="submit">
         </form>
+        <% if (typeof(barInfo) !== "undefined" && barInfo) { %> 
+            <h3>上傳資訊</h3>
+            <% if (typeof(barInfo.error) !== "undefined" && barInfo.error) { %>
+                <p><%= barInfo.error%></p>
+            <%} else {%>
+                <p><%= barInfo.success%></p>
+            <% } %>
+
+            <% if (typeof(barInfo.existed) !== "undefined" && barInfo.existed) { %>
+                <% for (let i = 0; i < barInfo.existed.length; i++) { %>
+                    <p>此酒吧已存在資料庫: </p>
+                    <%= barInfo.existed[i]%>
+                <% } %>
+            <% } %>
+        <% } %>
+
     </body>
 
 </html>
