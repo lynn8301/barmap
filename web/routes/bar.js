@@ -2,8 +2,11 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 const base = require(`${__dirname}/../../lib/base.js`)
-const multer = require('multer')
 const moment = require('moment')
+const fs = require('fs')
+
+// Upload File
+const multer = require('multer')
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     let des = `tmp/uploads/${file.fieldname}`
@@ -15,7 +18,7 @@ const storage = multer.diskStorage({
     let typeArray = file.originalname.split('.')
     let fileType = typeArray[typeArray.length - 1]
 
-    cb(null, `${file.fieldname}-${date}.${fileType}`)
+    cb(null, `${date}.${fileType}`)
   },
 })
 const fileFilter = function (req, file, cb) {
@@ -25,6 +28,10 @@ const fileFilter = function (req, file, cb) {
 
   cb(null, true)
 }
+
+// Send File To Cloudinary
+const cloudinary = require('cloudinary').v2
+cloudinary.config(base.config().cloudinary)
 
 router.get('/add', (req, res) => {
   let data = {
@@ -47,7 +54,7 @@ router.get('/bar-csv-sample-file', (req, res) => {
 
 // 單筆資料
 router.post('/submit', async (req, res) => {
-  let db = base.mysqlPool(base.config())
+  let db = base.mysqlPool(base.config().mysql)
   let params = req.body
   let barInfo = {
     name: params.name,
@@ -77,12 +84,8 @@ router.post('/submit', async (req, res) => {
 })
 
 // 多筆資料
-const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter,
-}).single('csv-file')
-
-router.post('/submitCSV', async (req, res) => {
+router.post('/submitCSV', async(req, res) => {
+  let upload = multer({storage, fileFilter: fileFilter}).single('barCSV')
   upload(req, res, async (err) => {
     let barInfo = {}
     if (err) {
@@ -90,21 +93,32 @@ router.post('/submitCSV', async (req, res) => {
     } else {
       barInfo.success = '上傳成功'
     }
-
-    let desPath = path.join(`${__dirname}`, '..', 'tmp/uploads', 'csv-file')
-    try {
-      let info = await base.insertBars(desPath)
-      barInfo.existed = info
-    } catch (e) {
-      barInfo.error = '請再次檢查資料格式'
-    }
-    
+    console.log(req.file)
+    // // Upload to cloudinary
+    // let filePath = req.file.path
+    // let fileName = req.file.filename
+    // let desPath = req.file.destination
+    // console.log(req.file)
+    // cloudinary.uploader.upload(
+    //   filePath,
+    //   {public_id: `${fileName}`, folder: 'barCSV',resource_type: "auto"},
+    //   async (err, result) => {
+    //     if(err) res.send(err)
+    //     try {
+    //       let info = await base.insertBars(path.join(__dirname, '..', desPath))
+    //       barInfo.existed = info
+    //     } catch (e) {
+    //       barInfo.error = '請再次檢查資料格式'
+    //     }
+    //     // remove file from server
+    //     fs.unlinkSync(filePath)
+    //   }
+    // )
     let data = {
       title: 'BarMap',
       description: 'To explore the amazing bar',
       barInfo: barInfo,
     }
-    console.log(data)
     res.render('bar/add', data)
   })
 })
