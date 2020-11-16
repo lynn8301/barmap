@@ -2,7 +2,6 @@
   let express = require('express')
   let bodyParser = require('body-parser')
   let cookieParser = require('cookie-parser')
-  let router = express.Router()
   let path = require('path')
   let cors = require('cors')
   let app = express()
