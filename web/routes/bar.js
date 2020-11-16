@@ -92,28 +92,26 @@ router.post('/submitCSV', async(req, res) => {
       barInfo.error = '請上傳正確的檔案格式'
     } else {
       barInfo.success = '上傳成功'
+
+      // Upload to cloudinary
+      let filePath = req.file.path
+      let fileName = req.file.filename
+      cloudinary.uploader.upload(
+        filePath,
+        {public_id: `${fileName}`, folder: 'barCSV',resource_type: "auto"},
+        async (err, result) => {
+          if(err) res.send(err)
+          try {
+            let info = await base.insertBars(filePath)
+            barInfo.existed = info
+          } catch (e) {
+            barInfo.error = '請再次檢查資料格式'
+          }
+          // remove file from server
+          fs.unlinkSync(filePath)
+        }
+      )
     }
-    console.log(req.file)
-    // // Upload to cloudinary
-    // let filePath = req.file.path
-    // let fileName = req.file.filename
-    // let desPath = req.file.destination
-    // console.log(req.file)
-    // cloudinary.uploader.upload(
-    //   filePath,
-    //   {public_id: `${fileName}`, folder: 'barCSV',resource_type: "auto"},
-    //   async (err, result) => {
-    //     if(err) res.send(err)
-    //     try {
-    //       let info = await base.insertBars(path.join(__dirname, '..', desPath))
-    //       barInfo.existed = info
-    //     } catch (e) {
-    //       barInfo.error = '請再次檢查資料格式'
-    //     }
-    //     // remove file from server
-    //     fs.unlinkSync(filePath)
-    //   }
-    // )
     let data = {
       title: 'BarMap',
       description: 'To explore the amazing bar',
