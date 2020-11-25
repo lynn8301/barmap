@@ -4,6 +4,7 @@ const path = require('path')
 const base = require(`${__dirname}/../../lib/base.js`)
 const moment = require('moment')
 const fs = require('fs')
+const AppBar = require(`${__dirname}/../app/Bar.js`)
 
 // Upload File
 const multer = require('multer')
@@ -84,7 +85,7 @@ router.post('/submit', async (req, res) => {
 })
 
 // 多筆資料
-router.post('/submitCSV', async(req, res) => {
+router.post('/submitCSV', async (req, res) => {
   let upload = multer({storage, fileFilter: fileFilter}).single('barCSV')
   upload(req, res, async (err) => {
     let barInfo = {}
@@ -98,9 +99,9 @@ router.post('/submitCSV', async(req, res) => {
       let fileName = req.file.filename
       cloudinary.uploader.upload(
         filePath,
-        {public_id: `${fileName}`, folder: 'barCSV',resource_type: "auto"},
+        {public_id: `${fileName}`, folder: 'barCSV', resource_type: 'auto'},
         async (err, result) => {
-          if(err) res.send(err)
+          if (err) res.send(err)
           try {
             let info = await base.insertBars(filePath)
             barInfo.existed = info
@@ -109,7 +110,7 @@ router.post('/submitCSV', async(req, res) => {
           }
           // remove file from server
           fs.unlinkSync(filePath)
-        }
+        },
       )
     }
     let data = {
@@ -119,6 +120,12 @@ router.post('/submitCSV', async(req, res) => {
     }
     res.render('bar/add', data)
   })
+})
+
+// Bar Info
+router.get('/api/v1/bar', async (req, res) => {
+  let data = await AppBar.getBarInfo()
+  res.json(data)
 })
 
 router.get('/map', (req, res) => {
