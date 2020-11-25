@@ -1,16 +1,20 @@
 <html>
     <head>
-        <title>Simple Map</title>
+        <title>Bar Map</title>
         <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
         <script src=""></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYZzAq3kq3DRK9wcD527frhcWVEJnun2o&callback=initMap&libraries=&v=weekly"
-      defer
+        <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYZzAq3kq3DRK9wcD527frhcWVEJnun2o&callback=initMap&libraries=&v=weekly"
         ></script>
+        <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
         <link rel="stylesheet"  href="/css/map.css" />
+        <link rel="shortcut icon" href="/img/favicon.ico" />
+        <link rel="icon" href="/img/favicon.ico" />
         <script src="/js/map.js"></script>
     </head>
     <body>
-        <p>map</p>
+        <h3>Bar Map</h3>
+        <!--The div element for the map -->
         <div id="map"></div>
     </body>
 </html>
