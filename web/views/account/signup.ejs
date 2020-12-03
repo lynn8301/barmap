@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <%- include('../common/header')%>
+        <link rel="stylesheet" href="/css/signup.css">
+    </head>
+    <body class="text-center">
+        <form method="POST" class="form-signup">
+            <img src="/img/signup.png" alt="BarMap">
+            <h1 class="h3 mb-3 font-weight-normal">Welcome to Bar Map</h1>
+            <label for="userName">Account</label>
+            <input type="userName" id="userName" name="userName" class="form-control" placeholder="Ex. BarMap" required autofocus>    
+            <label for="userPwd">Password</label>
+            <input type="password" id="userPwd" name="userPwd" class="form-control" required>
+            <label for="userRePwd">Confirm Password</label>
+            <input type="password" id="userRePwd" name="userRePwd" class="form-control" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" class="form-control">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" class="form-control">
+            <br>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </body>
+</html>
