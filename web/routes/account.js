@@ -62,7 +62,10 @@ router.post('/signup', async (req, res) => {
   let params = req.body
   // Password using bcrypt
   if (params.userPwd != params.userRePwd) {
-    res.send('密碼錯誤不同呦!')
+    let data = {
+      isNotValid: true,
+    }
+    res.render('account/signup', data)
   } else {
     let userPwd = bcrypt.hashSync(params.userPwd, 10)
     let userInfo = {
@@ -79,7 +82,11 @@ router.post('/signup', async (req, res) => {
       sess.username = userInfo.username
       res.render('bar/add')
     } else {
-      res.send('帳號已存在')
+      let data = {
+        username: userInfo.username,
+        isExisted: true,
+      }
+      res.render('account/signup', data)
     }
   }
 })
