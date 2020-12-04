@@ -5,6 +5,8 @@
   let path = require('path')
   let cors = require('cors')
   let session = require('express-session')
+  let redis = require('redis')
+  let RedisStore = require('connect-redis')(session)
   let base = require(`${__dirname}/../lib/base.js`)
   let app = express()
   app.use(bodyParser.json())
@@ -17,11 +19,14 @@
   app.use(cors())
 
   // Session setting
+  let redisClient = await redis.createClient(base.config().redis)
   let sess = {
     secret: base.config().session_secret,
     resave: false,
     saveUninitialized: true,
-    cookie: {},
+    cookie: {maxAge: 60 * 60 * 24 * 7}, // one week
+    store: new RedisStore({client: redisClient}),
+    name: '_redisDemo',
   }
   if (app.get('env') === 'production') {
     app.set('trust proxy', 1)
@@ -39,13 +44,13 @@
   app.use(express.static(path.join(__dirname, 'public')))
   app.set('views', path.join(__dirname, 'views'))
 
-  // Index Router
-  let index = require(`${__dirname}/routes/index.js`)
-  app.use('/index', index)
+  // Account Router
+  let account = require(`${__dirname}/routes/account.js`)
+  app.use('/account', account)
 
   // Bar Router
-  let barmap = require(`${__dirname}/routes/bar.js`)
-  app.use('/barmap', barmap)
+  let bar = require(`${__dirname}/routes/bar.js`)
+  app.use('/bar', bar)
 
   // Set index page
   app.get('/', (req, res) => {

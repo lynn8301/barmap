@@ -5,5 +5,6 @@ module.exports = {
         api_key: process.env.CLOUDINARY_API_KEY,
         api_secret: process.env.CLOUDINARY_API_SECRET
     },
-    session_secret: process.env.SESSION_SECRET
+    session_secret: process.env.SESSION_SECRET,
+    redis: process.env.REDIS_TLS_URL
 }
