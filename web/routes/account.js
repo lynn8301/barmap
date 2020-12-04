@@ -1,0 +1,87 @@
+const express = require('express')
+const router = express.Router()
+const bcrypt = require('bcrypt')
+const AppIndex = require(`${__dirname}/../app/Index.js`)
+
+router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.redirect('/index')
+    }
+  })
+})
+
+// //For Login
+router.get('/login', (req, res) => {
+  let sess = req.session
+  if (sess.login) {
+    res.render('bar/add')
+  } else {
+    let data = {
+      isValid: false,
+    }
+    res.render('account/login', {data: data})
+  }
+})
+
+router.post('/login', async (req, res) => {
+  let params = req.body
+  let userInfo = {
+    username: params.userName,
+    password: params.userPwd,
+  }
+  let existed = await AppIndex.findUser(userInfo)
+  existed = existed.payload
+
+  // If user does not exist, go to sign up page
+  if (existed == undefined) {
+    res.render('account/signup')
+  }
+  let checkPwd = await bcrypt.compare(userInfo.password, existed.password)
+  if (existed.username != userInfo.username || !checkPwd) {
+    let data = {
+      isValid: true,
+    }
+    res.render('account/login', {data: data})
+  } else {
+    let sess = req.session
+    sess.login = true
+    sess.username = userInfo.user
+    res.render('bar/add')
+  }
+})
+
+// // For Signup
+router.get('/signup', (req, res) => {
+  res.render('account/signup')
+})
+
+router.post('/signup', async (req, res) => {
+  let params = req.body
+  // Password using bcrypt
+  if (params.userPwd != params.userRePwd) {
+    res.send('密碼錯誤不同呦!')
+  } else {
+    let userPwd = bcrypt.hashSync(params.userPwd, 10)
+    let userInfo = {
+      username: params.userName,
+      password: userPwd,
+      first_name: params.firstName,
+      last_name: params.lastName,
+    }
+    let existed = await AppIndex.findUser(userInfo)
+    if (existed.payload == undefined) {
+      await AppIndex.saveUser(userInfo)
+      let sess = req.session
+      sess.login = true
+      sess.username = userInfo.username
+      res.render('bar/add')
+    } else {
+      res.send('帳號已存在')
+    }
+  }
+})
+
+module.exports = router
