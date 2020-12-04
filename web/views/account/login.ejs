@@ -7,10 +7,9 @@
         <form method="POST" class="form-signin">
             <img src="/img/beer.png" alt="BarMap">
             <h1 class="h3 mb-3 font-weight-normal">Please Log In</h1>
-            <% if (data.isValid) {%>
-                <div class="alert alert-danger" role="alert">
-                    帳號密碼錯誤
-                  </div>
+            <!-- Verify Account and Password -->
+            <%if (typeof(isValid) !== "undefined" && isValid) {%>
+                <div class="alert alert-danger" role="alert">帳號密碼錯誤</div>
             <% }%>
             <label for="userName" class="sr-only">Account:</label>
             <input type="userName" id="userName" name="userName" class="form-control" placeholder="Account" required autofocus>    

@@ -19,10 +19,7 @@ router.get('/login', (req, res) => {
   if (sess.login) {
     res.render('bar/add')
   } else {
-    let data = {
-      isValid: false,
-    }
-    res.render('account/login', {data: data})
+    res.render('account/login')
   }
 })
 
@@ -38,18 +35,19 @@ router.post('/login', async (req, res) => {
   // If user does not exist, go to sign up page
   if (existed == undefined) {
     res.render('account/signup')
-  }
-  let checkPwd = await bcrypt.compare(userInfo.password, existed.password)
-  if (existed.username != userInfo.username || !checkPwd) {
-    let data = {
-      isValid: true,
-    }
-    res.render('account/login', {data: data})
   } else {
-    let sess = req.session
-    sess.login = true
-    sess.username = userInfo.user
-    res.render('bar/add')
+    let checkPwd = await bcrypt.compare(userInfo.password, existed.password)
+    if (existed.username != userInfo.username || !checkPwd) {
+      let data = {
+        isValid: true,
+      }
+      res.render('account/login', data)
+    } else {
+      let sess = req.session
+      sess.login = true
+      sess.username = userInfo.user
+      res.render('bar/add')
+    }
   }
 })
 
