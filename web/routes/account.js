@@ -69,6 +69,7 @@ router.post('/signup', async (req, res) => {
     let userInfo = {
       username: params.userName,
       password: userPwd,
+      email: params.email,
       first_name: params.firstName,
       last_name: params.lastName,
     }
