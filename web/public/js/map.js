@@ -11,7 +11,7 @@ async function initMap() {
     center: taipei,
   })
 
-  let response = await fetch('https://bamap.herokuapp.com/barmap/api/v1/bar')
+  let response = await fetch('https://bamap.herokuapp.com/bar/api/v1/bar')
   let data = await response.json()
   let barInfos = data.payload
 
