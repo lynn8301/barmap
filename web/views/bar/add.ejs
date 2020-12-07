@@ -1,11 +1,8 @@
 <html>
     <head>
-        <title>
-            <%= title%>
-        </title>
+        <%- include('../common/header')%>
     </head>
     <body>
-        <p><%= description%></p>
         <form action="/barmap/submit" method="POST">
             <h2>單筆資料</h2>
             <ul>
