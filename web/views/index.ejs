@@ -1,10 +1,15 @@
 <html>
     <head>
-        <title><%= title%></title>
+        <%- include('common/header')%>
     </head>
     <body>
         <h1><%= title%></h1>
         <p><%= description%></p>
-        <a href="/index/login">Login</a>
+        <a href="/bar/map">
+            <button type="button" class="btn btn-primary">Start Explore</button>
+        </a>
+        <a href="/account/login">
+            <button type="button" class="btn btn-info">Login</button>
+        </a>
     </body>
 </html>
