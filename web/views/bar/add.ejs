@@ -3,33 +3,63 @@
         <%- include('../common/header')%>
     </head>
     <body>
-        <form action="/barmap/submit" method="POST">
+        
+        <form action="submit-singular" method="POST" id="submit-singular">
             <h2>單筆資料</h2>
             <ul>
                 <li>
-                    <label>酒吧名稱:</label>
-                    <input type="text" name="name"><br>
+                    <div class="form-group">
+                        <label for="inputBarName">酒吧名稱:</label>
+                        <input type="text" name="name">
+                    </div>        
                 </li>
                 <li>
-                    <label>地址:</label>
-                    <input type="text" name="address"><br>    
+                    <div class="form-group">
+                        <label>酒吧地址:</label>
+                        <input type="text" name="address"><br>
+                    </div>        
                 </li>
                 <li>
-                    <label>電話:</label>
-                    <input type="text" name="phone"><br>    
+                    <div class="form-group">
+                        <label>電話:</label>
+                        <input type="text" name="phone"><br>
+                    </div>        
                 </li>
-                <li>
-                    <label>緯度:</label>
-                    <input type="text" name="lat" value="0"><br>
-                    <small>Format: </small><br>
-                </li>
-                <li>
-                    <label>經度</label>
-                    <input type="text" name="lng" value="0"><br>
-                    <small>Format: </small><br>    
-                </li>
+                <!-- Must be done columns -->
+                <%if (typeof(lat) !== "undefined" && lat) {%>
+                    <li>
+                        <div class="form-group">
+                            <label>緯度:</label>
+                            <input type="text" name="lat" value="0" class="form-control is-invalid col-md-3 mb-3">
+                        </div>   
+                    </li>
+                <% }else{ %> 
+                    <li>
+                        <div class="form-group">
+                            <label>緯度:</label>
+                            <input type="text" name="lat" value="0" required><br>
+                            <small>Format: 25.033493</small><br>
+                        </div>   
+                    </li>  
+                <% }%> 
+                <%if (typeof(lng) !== "undefined" && lng) {%>
+                    <li>
+                        <div class="form-group">
+                            <label>經度</label>
+                            <input type="text" name="lng" value="0" class="form-control is-invalid col-md-3 mb-3">
+                        </div>     
+                    </li>
+                <% }else{ %>
+                    <li>
+                        <div class="form-group">
+                            <label>經度</label>
+                            <input type="text" name="lng" value="0" required><br>
+                            <small>Format: 121.564101</small><br>    
+                        </div>     
+                    </li>
+                <% }%>
             </ul>
-            <input type="submit">
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <% if (typeof(barInfo) !== "undefined" && barInfo) { %> 
             <h3>上傳資訊</h3>
@@ -43,11 +73,24 @@
                 <p>Lng: <%= barInfo.lng%></p>
             <% } %>
         <% } %>
-        <form action="/barmap/submitCSV" method="POST" enctype="multipart/form-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- <form action="/bar/submitCSV" method="POST" enctype="multipart/form-data">
             <h2>多筆資料</h2>
             <label>Upload CSV File: </label>
             <input type="file" name="barCSV"><br>
-            <a href="/barmap/bar-csv-sample-file">Download Sample</a><br>
+            <a href="/bar/bar-csv-sample-file">Download Sample</a><br>
             <input type="submit">
         </form>
         <% if (typeof(barInfo) !== "undefined" && barInfo) { %> 
@@ -64,8 +107,9 @@
                     <%= barInfo.existed[i]%>
                 <% } %>
             <% } %>
-        <% } %>
-
+        <% } %> -->
+        <a href="/account/logout">
+            <button type="button" class="btn btn-danger">Logout</button>
+        </a>
     </body>
-
 </html>
