@@ -18,6 +18,24 @@ class Bar {
     await db.end()
     return apiResult
   }
+  /**
+   * Insert Bar Info
+   * @data {*} params
+   */
+  static async insertBarInfo(data) {
+    let apiResult = Utility.initialApiResult()
+    let db = base.mysqlPool(base.config().mysql)
+    try {
+      let results = await db.queryAsync('INSERT INTO bar SET ?', data)
+      apiResult.success = true
+      apiResult.payload = results
+    } catch(e) {
+      apiResult.success = false
+      apiResult.message = e.message
+    }
+    await db.end()
+    return apiResult
+  }
 }
 
 module.exports = Bar

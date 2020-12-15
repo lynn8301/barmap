@@ -3,12 +3,13 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const AppIndex = require(`${__dirname}/../app/Index.js`)
 
+// For Logout
 router.get('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.log(err)
     } else {
-      res.redirect('/index')
+      res.redirect('/')
     }
   })
 })
@@ -17,7 +18,7 @@ router.get('/logout', (req, res) => {
 router.get('/login', (req, res) => {
   let sess = req.session
   if (sess.login) {
-    res.render('bar/add')
+    res.redirect('../bar/add-singular')
   } else {
     res.render('account/login')
   }
@@ -46,12 +47,12 @@ router.post('/login', async (req, res) => {
       let sess = req.session
       sess.login = true
       sess.username = userInfo.user
-      res.render('bar/add')
+      res.redirect('../bar/add-singular')
     }
   }
 })
 
-// // For Signup
+// For Signup
 router.get('/signup', (req, res) => {
   res.render('account/signup')
 })
@@ -79,7 +80,7 @@ router.post('/signup', async (req, res) => {
       let sess = req.session
       sess.login = true
       sess.username = userInfo.username
-      res.render('bar/add')
+      res.render('bar/addSingular')
     } else {
       let data = {
         username: userInfo.username,
