@@ -34,6 +34,7 @@ const fileFilter = function (req, file, cb) {
 const cloudinary = require('cloudinary').v2
 cloudinary.config(base.config().cloudinary)
 
+// Main Page
 router.get('/add-singular', (req, res) => {
   let sess = req.session
   if (sess.login) {
@@ -73,7 +74,6 @@ router.post('/submit-singular', async (req, res) => {
     await AppBar.insertBarInfo(data)
   } else {
     data.error = '資料以存在'
-
   }
   await db.end()
 
@@ -81,14 +81,23 @@ router.post('/submit-singular', async (req, res) => {
 })
 
 // 多筆資料
-router.post('/submitCSV', async (req, res) => {
+router.get('/add-multiple', (req, res) => {
+  let sess = req.session
+  if (sess.login) {
+    res.render('bar/addMultiple')
+  } else {
+    res.redirect('../account/login')
+  }
+})
+
+router.post('/submit-multiple', async (req, res) => {
   let upload = multer({storage, fileFilter: fileFilter}).single('barCSV')
   upload(req, res, async (err) => {
-    let barInfo = {}
+    let data = {}
     if (err) {
-      barInfo.error = '請上傳正確的檔案格式'
+      data.error = '請上傳正確的檔案格式'
     } else {
-      barInfo.success = '上傳成功'
+      data.success = '上傳成功'
 
       // Upload to cloudinary
       let filePath = req.file.path
@@ -100,21 +109,16 @@ router.post('/submitCSV', async (req, res) => {
           if (err) res.send(err)
           try {
             let info = await base.insertBars(filePath)
-            barInfo.existed = info
+            data.existed = info
           } catch (e) {
-            barInfo.error = '請再次檢查資料格式'
+            data.error = '請再次檢查資料格式'
           }
           // remove file from server
           fs.unlinkSync(filePath)
         },
       )
     }
-    let data = {
-      title: 'BarMap',
-      description: 'To explore the amazing bar',
-      barInfo: barInfo,
-    }
-    res.render('bar/add', data)
+    res.render('bar/addMultiple', data)
   })
 })
 
