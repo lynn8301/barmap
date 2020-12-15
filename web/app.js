@@ -20,17 +20,23 @@
 
   // Session setting
   let redisClient = await redis.createClient(base.config().redis)
+  let hour = 3600000
+  let week = hour * 24 * 7
   let sess = {
     secret: base.config().session_secret,
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge: 60 * 60 * 24 * 7}, // one week
+    cookie: {
+      expires: new Date(Date.now() + week),
+      maxAge: week
+    }, 
     store: new RedisStore({client: redisClient}),
     name: '_redisDemo',
   }
   if (app.get('env') === 'production') {
     app.set('trust proxy', 1)
     sess.cookie.secure = true
+    sess.name = 'bamap'
   }
   app.use(session(sess))
 
