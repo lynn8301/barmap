@@ -62,4 +62,16 @@ async function initMap() {
     imagePath:
       'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
   })
+
+  // Hide Points of Interest
+  let styles = {
+    poi: [
+      {
+        featureType: 'poi',
+        stylers: [{visibility: 'off'}],
+      },
+    ],
+  }
+  map.setOptions({styles: styles['poi']})
+
 }
