@@ -18,7 +18,7 @@ router.get('/logout', (req, res) => {
 router.get('/login', (req, res) => {
   let sess = req.session
   if (sess.login) {
-    res.redirect('../bar/add')
+    res.redirect('../bar/add-singular')
   } else {
     res.render('account/login')
   }
@@ -47,7 +47,7 @@ router.post('/login', async (req, res) => {
       let sess = req.session
       sess.login = true
       sess.username = userInfo.user
-      res.redirect('../bar/addSingular')
+      res.redirect('../bar/add-singular')
     }
   }
 })
