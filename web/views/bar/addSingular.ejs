@@ -49,30 +49,6 @@
             </ul>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-
-
-        <!-- <form action="/bar/submitCSV" method="POST" enctype="multipart/form-data">
-            <h2>多筆資料</h2>
-            <label>Upload CSV File: </label>
-            <input type="file" name="barCSV"><br>
-            <a href="/bar/bar-csv-sample-file">Download Sample</a><br>
-            <input type="submit">
-        </form>
-        <% if (typeof(barInfo) !== "undefined" && barInfo) { %> 
-            <h3>上傳資訊</h3>
-            <% if (typeof(barInfo.error) !== "undefined" && barInfo.error) { %>
-                <p><%= barInfo.error%></p>
-            <%} else {%>
-                <p><%= barInfo.success%></p>
-            <% } %>
-
-            <% if (typeof(barInfo.existed) !== "undefined" && barInfo.existed) { %>
-                <% for (let i = 0; i < barInfo.existed.length; i++) { %>
-                    <p>此酒吧已存在資料庫: </p>
-                    <%= barInfo.existed[i]%>
-                <% } %>
-            <% } %>
-        <% } %> -->
         <a href="/account/logout">
             <button type="button" class="btn btn-danger">Logout</button>
         </a>
