@@ -47,7 +47,7 @@ router.post('/login', async (req, res) => {
       let sess = req.session
       sess.login = true
       sess.username = userInfo.user
-      res.render('bar/add')
+      res.redirect('../bar/addSingular')
     }
   }
 })
@@ -80,7 +80,7 @@ router.post('/signup', async (req, res) => {
       let sess = req.session
       sess.login = true
       sess.username = userInfo.username
-      res.render('bar/add')
+      res.render('bar/addSingular')
     } else {
       let data = {
         username: userInfo.username,
