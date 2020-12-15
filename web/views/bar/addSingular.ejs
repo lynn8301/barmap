@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <%- include('../common/header')%>
+    </head>
+    <body>
+        <form action="/bar/submit-singular" method="POST" id="submit-singular">
+            <h2>酒吧資料上傳 - 單筆</h2>
+            <a href="/bar/add-singular" class="badge badge-primary">單筆</a>
+            <a href="#" class="badge badge-secondary">多筆</a>
+            <% if (typeof(error) !== "undefined" && error) { %> 
+                <div class="alert alert-danger col-md-2" role="alert">
+                    <%= name%> <%= error%>
+                </div>
+            <% } %>
+            <ul>
+                <li>
+                    <div class="form-group">
+                        <label for="inputBarName">酒吧名稱:</label>
+                        <input type="text" name="name" required />
+                    </div>        
+                </li>
+                <li>
+                    <div class="form-group">
+                        <label>酒吧地址:</label>
+                        <input type="text" name="address"><br>
+                    </div>        
+                </li>
+                <li>
+                    <div class="form-group">
+                        <label>電話:</label>
+                        <input type="text" name="phone"><br>
+                    </div>        
+                </li>
+                <!-- Must be done columns -->
+                <li>
+                    <div class="form-group">
+                        <label>緯度:</label>
+                        <input type="text" name="lat" required /><br>
+                        <small>Format: 25.033493</small><br>
+                    </div>   
+                </li>  
+                <li>
+                    <div class="form-group">
+                        <label>經度</label>
+                        <input type="text" name="lng"  required /><br>
+                        <small>Format: 121.564101</small><br>    
+                    </div>     
+                </li>
+            </ul>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+        <!-- <form action="/bar/submitCSV" method="POST" enctype="multipart/form-data">
+            <h2>多筆資料</h2>
+            <label>Upload CSV File: </label>
+            <input type="file" name="barCSV"><br>
+            <a href="/bar/bar-csv-sample-file">Download Sample</a><br>
+            <input type="submit">
+        </form>
+        <% if (typeof(barInfo) !== "undefined" && barInfo) { %> 
+            <h3>上傳資訊</h3>
+            <% if (typeof(barInfo.error) !== "undefined" && barInfo.error) { %>
+                <p><%= barInfo.error%></p>
+            <%} else {%>
+                <p><%= barInfo.success%></p>
+            <% } %>
+
+            <% if (typeof(barInfo.existed) !== "undefined" && barInfo.existed) { %>
+                <% for (let i = 0; i < barInfo.existed.length; i++) { %>
+                    <p>此酒吧已存在資料庫: </p>
+                    <%= barInfo.existed[i]%>
+                <% } %>
+            <% } %>
+        <% } %> -->
+        <a href="/account/logout">
+            <button type="button" class="btn btn-danger">Logout</button>
+        </a>
+    </body>
+</html>

@@ -34,12 +34,13 @@ const fileFilter = function (req, file, cb) {
 const cloudinary = require('cloudinary').v2
 cloudinary.config(base.config().cloudinary)
 
-router.get('/add', (req, res) => {
-  let data = {
-    title: 'BarMap',
-    description: 'To explore the amazing bar',
+router.get('/add-singular', (req, res) => {
+  let sess = req.session
+  if (sess.login) {
+    res.render('bar/addSingular')
+  } else {
+    res.redirect('../account/login')
   }
-  res.render('bar/add', data)
 })
 
 // Bar CSV Sample
@@ -54,10 +55,10 @@ router.get('/bar-csv-sample-file', (req, res) => {
 })
 
 // 單筆資料
-router.post('/submit', async (req, res) => {
+router.post('/submit-singular', async (req, res) => {
   let db = base.mysqlPool(base.config().mysql)
   let params = req.body
-  let barInfo = {
+  let data = {
     name: params.name,
     address: params.address,
     phone: params.phone,
@@ -66,22 +67,17 @@ router.post('/submit', async (req, res) => {
   }
   let existed = await db.queryAsync(
     'SELECT * FROM bar WHERE name = ?',
-    barInfo.name,
+    data.name,
   )
   if (existed == 0) {
-    await db.queryAsync('INSERT INTO bar SET ?', barInfo)
+    await AppBar.insertBarInfo(data)
   } else {
-    barInfo.error = '資料以存在'
+    data.error = '資料以存在'
+
   }
   await db.end()
 
-  let data = {
-    title: 'BarMap',
-    description: 'To explore the amazing bar',
-    barInfo: barInfo,
-  }
-
-  res.render('bar/add', data)
+  res.render('bar/addSingular', data)
 })
 
 // 多筆資料
