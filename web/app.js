@@ -61,7 +61,7 @@
   // Set index page
   app.get('/', (req, res) => {
     let data = {
-      title: 'BarMap',
+      title: 'Bar Map',
       description: 'To explore the amazing bar',
     }
     res.render('index', data)
