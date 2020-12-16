@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
     } else {
       let sess = req.session
       sess.login = true
-      sess.username = userInfo.user
+      sess.username = userInfo.username
       res.redirect('../bar/add-singular')
     }
   }
