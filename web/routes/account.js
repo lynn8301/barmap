@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
     let checkPwd = await bcrypt.compare(userInfo.password, existed.password)
     if (existed.username != userInfo.username || !checkPwd) {
       let data = {
-        isValid: true,
+        isValid: false,
       }
       res.render('account/login', data)
     } else {

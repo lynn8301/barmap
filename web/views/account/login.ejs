@@ -8,7 +8,7 @@
             <img src="/img/beer.png" alt="BarMap">
             <h1 class="h3 mb-3 font-weight-normal">Please Log In</h1>
             <!-- Verify Account and Password -->
-            <%if (typeof(isValid) !== "undefined" && isValid) {%>
+            <%if (typeof(isValid) !== "undefined" && !isValid) {%>
                 <div class="alert alert-danger" role="alert">帳號密碼錯誤</div>
             <% }%>
             <label for="userName" class="sr-only">Account:</label>
