@@ -62,4 +62,36 @@ async function initMap() {
     imagePath:
       'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
   })
+
+  // Hide Points of Interest
+  let styles = {
+    poi: [
+      {
+        featureType: 'poi',
+        stylers: [{visibility: 'off'}],
+      },
+    ],
+  }
+  map.setOptions({styles: styles['poi']})
+
+  // Current Location
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      currentLocation = new google.maps.LatLng(
+        position.coords.latitude,
+        position.coords.longitude,
+      )
+      map.setCenter(currentLocation)
+      currentMarker = new google.maps.Marker({
+        position: currentLocation,
+        title: 'Current Position',
+        icon:
+          'https://res.cloudinary.com/hdt0wmjkv/image/upload/v1608023217/location_1_ybl18v.png',
+        map: map,
+      })
+    })
+  } else {
+    alert('Geolocation is not supported by this browser.')
+    currentStart = taipei
+  }
 }
