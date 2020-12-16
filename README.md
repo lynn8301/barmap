@@ -14,3 +14,13 @@ $ cd barmap
 ```
 $ npm install
 ```
+
+## Development Environment
+- Run the app with the following command:
+```
+$ node web/app.js
+```
+- Use website to connect http://localhost:3000
+
+## Production Environment
+- The Link : https://bamap.herokuapp.com/
