@@ -128,6 +128,18 @@ router.get('/api/v1/bar', async (req, res) => {
   res.json(data)
 })
 
+// For Display
+router.get('/api/v1/barRead', async (req, res) => {
+  let params = {
+    by: req.query.by,
+    order: req.query.order,
+    limit: req.query.limit,
+    pageNum: req.query.pageNum,
+  }
+  let data = await AppBar.readBarInfo(params)
+  res.json(data)
+})
+
 router.get('/map', (req, res) => {
   res.render('bar/map')
 })
