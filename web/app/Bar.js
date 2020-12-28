@@ -43,7 +43,7 @@ class Bar {
    */
   static async readBarInfo(
     params,
-    by = 'id',
+    by = 'name',
     order = 'ASC',
     limit = 10,
     pageNum = 1,

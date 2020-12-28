@@ -122,6 +122,19 @@ router.post('/submit-multiple', async (req, res) => {
   })
 })
 
+// Router -> show
+router.get('/show', async(req, res) => {
+  let params = {
+    by: req.query.by,
+    order: req.query.order,
+    limit: req.query.limit,
+    pageNum: req.query.pageNum,
+  }
+  let bars = await AppBar.readBarInfo(params)
+  res.render('bar/show', bars)
+})
+
+
 // Bar Info
 router.get('/api/v1/bar', async (req, res) => {
   let data = await AppBar.getBarInfo()

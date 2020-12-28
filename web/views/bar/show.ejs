@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <%- include('../common/header')%>
+        <link rel="stylesheet"  href="/css/show.css" />
+    </head>
+    <body>
+      <h1><a href="/">Bar Map</a></h1>
+      <button type="button" class="btn btn-success"><a href="/bar/add-singular">Add New Data</a></button>
+      <div id="table">
+        <table class="table table-bordered">
+          <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">酒吧名稱</th>
+                <th scope="col">地址</th>
+                <th scope="col">電話</th>
+                <th scope="col">緯度</th>
+                <th scope="col">經度</th>
+                <th scope="col">動作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let i = 0; i < payload.length; i++) {%>
+                <tr>
+                  <th scope="row"><%= i+1%></th>
+                  <td><%= payload[i].name %></td>
+                  <td><%= payload[i].address %></td>
+                  <td><%= payload[i].phone %></td>
+                  <td><%= payload[i].lat %></td>
+                  <td><%= payload[i].lng %></td>
+                  <td>
+                    <button type="button" class="btn btn-primary">Edit</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+        </table>
+      </div>
+    </body>
+</html>
