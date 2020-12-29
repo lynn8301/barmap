@@ -162,6 +162,16 @@ router.post('/edit', async (req, res) => {
   res.json(result)
 })
 
+/**
+ * Delete Bar Info
+ * Router -> delete
+ */
+router.post('/delete', async (req, res) => {
+  let params = req.body
+  let result = await AppBar.deleteTable(params)
+  res.json(result)
+})
+
 router.get('/map', (req, res) => {
   res.render('bar/map')
 })
