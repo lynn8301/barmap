@@ -123,7 +123,7 @@ router.post('/submit-multiple', async (req, res) => {
 })
 
 // Router -> show
-router.get('/show', async(req, res) => {
+router.get('/show', async (req, res) => {
   let params = {
     by: req.query.by,
     order: req.query.order,
@@ -133,7 +133,6 @@ router.get('/show', async(req, res) => {
   let bars = await AppBar.readBarInfo(params)
   res.render('bar/show', bars)
 })
-
 
 // Bar Info
 router.get('/api/v1/bar', async (req, res) => {
@@ -151,6 +150,16 @@ router.get('/api/v1/barRead', async (req, res) => {
   }
   let data = await AppBar.readBarInfo(params)
   res.json(data)
+})
+
+/**
+ * Edit Bar Info
+ * Router -> edit
+ */
+router.post('/edit', async (req, res) => {
+  let params = req.body
+  let result = await AppBar.editTable(params)
+  res.json(result)
 })
 
 router.get('/map', (req, res) => {

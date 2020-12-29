@@ -76,6 +76,33 @@ class Bar {
     await db.end()
     return apiResult
   }
+
+  /**
+   * Edit Bar Info
+   * @param{*} params
+   */
+  static async editTable(params) {
+    let apiResult = Utility.initialApiResult()
+    let check = Utility.checkRequired(params, ['id'])
+    if (!check['success']) {
+      apiResult.message = check['message']
+      return apiResult
+    }
+
+    let db = base.mysqlPool(base.config().mysql)
+    try {
+      await db.queryAsync('UPDATE bar SET ? WHERE id = ?', [params, params.id])
+
+      apiResult.success = true
+      apiResult.code = 200
+      apiResult.message = 'SUCCESS'
+    } catch (e) {
+      apiResult.success = false
+      apiResult.message = e.message
+    }
+    await db.end()
+    return apiResult
+  }
 }
 
 module.exports = Bar
