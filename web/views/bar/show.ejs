@@ -2,6 +2,26 @@
     <head>
         <%- include('../common/header')%>
         <link rel="stylesheet"  href="/css/show.css" />
+        <script>
+          $(function() {
+            $('button#del').click(function() {
+              $(this).closest('tr').remove()
+            })
+
+            $('button#edit').on('click', 'hide')(function() {
+              let datas = $(this).closest('tr').find('td')
+              for(let i = 0; i < datas.length; i++) {
+                datas.eq(i).replaceWith(`<td><input type="text" value="${datas.eq(i).text()}"></td>`)
+              }
+              // $("#edit").hide()
+              // $("#del").hide()
+
+              // let saveEle = $('<button id="save" type="button" class="btn btn-success">Save</button>')
+              // $("#action").append(saveEle)
+            })
+            
+          })
+        </script>
     </head>
     <body>
       <h1><a href="/">Bar Map</a></h1>
@@ -33,10 +53,12 @@
                   <td><%= payload[i].phone %></td>
                   <td><%= payload[i].lat %></td>
                   <td><%= payload[i].lng %></td>
-                  <td>
-                    <button type="button" class="btn btn-primary">Edit</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
-                  </td>
+                  <th id="action">
+                    <button id="edit" type="button" class="btn btn-primary">Edit</button>
+                    <a href="<%= `/bar/delete?id=${payload[i].id}`%>">
+                      <button id="del" type="button" class="btn btn-danger">Delete</button>
+                    </a>
+                  </th>
                 </tr>
               <% } %>
             </tbody>
