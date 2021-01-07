@@ -124,14 +124,19 @@ router.post('/submit-multiple', async (req, res) => {
 
 // Router -> show
 router.get('/show', async (req, res) => {
-  let params = {
-    by: req.query.by,
-    order: req.query.order,
-    limit: req.query.limit,
-    pageNum: req.query.pageNum,
+  let sess = req.session
+  if (sess.login) {
+    let params = {
+      by: req.query.by,
+      order: req.query.order,
+      limit: req.query.limit,
+      pageNum: req.query.pageNum,
+    }
+    let bars = await AppBar.readBarInfo(params)
+    res.render('bar/show', bars)
+  } else {
+    res.redirect('../account/login')
   }
-  let bars = await AppBar.readBarInfo(params)
-  res.render('bar/show', bars)
 })
 
 // Bar Info

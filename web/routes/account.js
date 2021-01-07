@@ -18,7 +18,7 @@ router.get('/logout', (req, res) => {
 router.get('/login', (req, res) => {
   let sess = req.session
   if (sess.login) {
-    res.redirect('../bar/add-singular')
+    res.redirect('../bar/show')
   } else {
     res.render('account/login')
   }
