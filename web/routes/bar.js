@@ -163,9 +163,7 @@ router.get('/api/v1/barRead', async (req, res) => {
  */
 router.post('/edit', async (req, res) => {
   let params = req.body
-  console.log(params)
   let result = await AppBar.editTable(params)
-  console.log(result)
   res.json(result)
 })
 
