@@ -1,3 +1,5 @@
+const {param} = require('../routes/bar')
+
 const base = require(`${__dirname}/../../lib/base.js`)
 const Utility = require(`${__dirname}/Common/Utility.js`)
 class Bar {
@@ -43,7 +45,7 @@ class Bar {
    */
   static async readBarInfo(
     params,
-    by = 'id',
+    by = 'name',
     order = 'ASC',
     limit = 10,
     pageNum = 1,
@@ -64,11 +66,68 @@ class Bar {
         parseInt(limit) * (parseInt(pageNum) - 1)
       }`
 
+      let total = await db.queryAsync(`SELECT Count(1) FROM bar`)
+      let totalPage = Math.ceil(total[0]["Count(1)"] / 10)
+
       let results = await db.queryAsync(`SELECT * FROM bar ${sort} ${offset}`)
       apiResult.success = true
       apiResult.limit = limit
       apiResult.pageNum = pageNum
+      apiResult.totalPage = totalPage
       apiResult.payload = results
+    } catch (e) {
+      apiResult.success = false
+      apiResult.message = e.message
+    }
+    await db.end()
+    return apiResult
+  }
+
+  /**
+   * Edit Bar Info
+   * @param{*} params
+   */
+  static async editTable(params) {
+    let apiResult = Utility.initialApiResult()
+    let check = Utility.checkRequired(params, ['id'])
+    if (!check['success']) {
+      apiResult.message = check['message']
+      return apiResult
+    }
+
+    let db = base.mysqlPool(base.config().mysql)
+    try {
+      await db.queryAsync('UPDATE bar SET ? WHERE id = ?', [params, params.id])
+
+      apiResult.success = true
+      apiResult.code = 200
+      apiResult.message = 'SUCCESS'
+    } catch (e) {
+      apiResult.success = false
+      apiResult.message = e.message
+    }
+    await db.end()
+    return apiResult
+  }
+
+  /**
+   * Delete Bar Info
+   * @param{*} params
+   */
+  static async deleteTable(params) {
+    let apiResult = Utility.initialApiResult()
+    let check = Utility.checkRequired(params, ['id'])
+    if (!check['success']) {
+      apiResult.mesage = check['message']
+      return apiResult
+    }
+    let db = base.mysqlPool(base.config().mysql)
+    try {
+      await db.queryAsync('DELETE FROM bar WHERE ?', params)
+
+      apiResult.success = true
+      apiResult.code = 200
+      apiResult.message = 'SUCCESS'
     } catch (e) {
       apiResult.success = false
       apiResult.message = e.message

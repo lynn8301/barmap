@@ -122,6 +122,23 @@ router.post('/submit-multiple', async (req, res) => {
   })
 })
 
+// Router -> show
+router.get('/show', async (req, res) => {
+  let sess = req.session
+  if (sess.login) {
+    let params = {
+      by: req.query.by,
+      order: req.query.order,
+      limit: req.query.limit,
+      pageNum: req.query.pageNum,
+    }
+    let bars = await AppBar.readBarInfo(params)
+    res.render('bar/show', bars)
+  } else {
+    res.redirect('../account/login')
+  }
+})
+
 // Bar Info
 router.get('/api/v1/bar', async (req, res) => {
   let data = await AppBar.getBarInfo()
@@ -138,6 +155,26 @@ router.get('/api/v1/barRead', async (req, res) => {
   }
   let data = await AppBar.readBarInfo(params)
   res.json(data)
+})
+
+/**
+ * Edit Bar Info
+ * Router -> edit
+ */
+router.post('/edit', async (req, res) => {
+  let params = req.body
+  let result = await AppBar.editTable(params)
+  res.json(result)
+})
+
+/**
+ * Delete Bar Info
+ * Router -> delete
+ */
+router.get('/delete?:id', async (req, res) => {
+  let params = req.query
+  let result = await AppBar.deleteTable(params)
+  res.redirect('/bar/show')
 })
 
 router.get('/map', (req, res) => {
