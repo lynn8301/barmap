@@ -66,10 +66,14 @@ class Bar {
         parseInt(limit) * (parseInt(pageNum) - 1)
       }`
 
+      let total = await db.queryAsync(`SELECT Count(1) FROM bar`)
+      let totalPage = Math.ceil(total[0]["Count(1)"] / 10)
+
       let results = await db.queryAsync(`SELECT * FROM bar ${sort} ${offset}`)
       apiResult.success = true
       apiResult.limit = limit
       apiResult.pageNum = pageNum
+      apiResult.totalPage = totalPage
       apiResult.payload = results
     } catch (e) {
       apiResult.success = false
