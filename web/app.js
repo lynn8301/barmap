@@ -42,6 +42,7 @@
 
   // set poty to 3000 or the value set by environment var PORT
   app.set('port', process.env.PORT || 3000)
+  app.set('host', process.env.HOST || "localhost")
 
   // set the view engine to ejs
   app.set('view engine', 'ejs')
@@ -64,6 +65,6 @@
   })
 
   app.listen(app.get('port'), () => {
-    console.log(`Exapmle app listening at http://localhost:${app.get('port')}`)
+    console.log(`App listening at http://${app.get('host')}:${app.get('port')}`)
   })
 })()
