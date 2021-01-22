@@ -60,10 +60,7 @@
 
   // Set index page
   app.get('/', (req, res) => {
-    let data = {
-      description: 'To explore the amazing bar',
-    }
-    res.render('index', data)
+    res.render('index')
   })
 
   app.listen(app.get('port'), () => {
