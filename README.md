@@ -1,5 +1,5 @@
 # Barmap
-A map which collocts a variety of bars.
+A map which collects a variety of bars.
 
 ## Basic Function
 - Add
