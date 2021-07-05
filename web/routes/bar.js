@@ -139,11 +139,11 @@ router.get('/show', async (req, res) => {
   }
 })
 
-// // Bar Info
-// router.get('/api/v1/bar', async (req, res) => {
-//   let data = await AppBar.getBarInfo()
-//   res.json(data)
-// })
+// Bar Info
+router.get('/api/v1/bar', async (req, res) => {
+  let data = await AppBar.getBarInfo()
+  res.json(data)
+})
 
 // For Display
 router.get('/api/v1/barRead', async (req, res) => {
