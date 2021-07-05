@@ -19,7 +19,7 @@
   app.use(cors())
 
   // Session setting
-  let redisClient = await redis.createClient(base.config().redis)
+  let redisClient = redis.createClient(base.config().redis)
   let hour = 3600000
   let week = hour * 24 * 7
   let sess = {
